@@ -36,6 +36,45 @@ class RawGistsParserTests < Test::Unit::TestCase
         assert_equal("line1", parsed_line_0)        
         assert_equal("line2", parsed_line_1)
     end
+    
+    def test_parse_lines_with_redundant_lines
+        lines = ["line1", "$$$", "line2", "$$$", "line3"]
+        
+        expected_description = "example description"
+        expected_gist_name_suffix = "gist_name.swift"
+        
+        parsed_lines = RawGistsParser.parse_lines(lines)
+        
+        expected_parsed_lines_count = 2
+        assert_not_nil(parsed_lines)
+        assert_equal(expected_parsed_lines_count, parsed_lines.length)            
+        
+        parsed_line_0 = parsed_lines[0][0]
+        parsed_line_1 = parsed_lines[1][0]
+        
+        assert_equal("line1", parsed_line_0)        
+        assert_equal("line2", parsed_line_1)
+    end
+
+    def test_parse_lines_with_redundant_delimiter
+        lines = ["$$$", "line1", "$$$", "line2", "$$$"]
+        
+        expected_description = "example description"
+        expected_gist_name_suffix = "gist_name.swift"
+        
+        parsed_lines = RawGistsParser.parse_lines(lines)
+        
+        expected_parsed_lines_count = 2
+        assert_not_nil(parsed_lines)
+        assert_equal(expected_parsed_lines_count, parsed_lines.length)            
+        
+        parsed_line_0 = parsed_lines[0][0]
+        parsed_line_1 = parsed_lines[1][0]
+        
+        assert_equal("line1", parsed_line_0)        
+        assert_equal("line2", parsed_line_1)
+    end
+    
 end
 
 class RawGistTests < Test::Unit::TestCase

@@ -18,7 +18,19 @@ class RawGistsParser
     end
     
     def self.parse_lines(lines) 
-                
+        parsed_lines = Array.new
+        current_gist = Array.new        
+        lines.each do |line|
+            if line == DELIMITER
+               unless current_gist.count == 0
+                  parsed_lines << current_gist
+                  current_gist = Array.new 
+               end 
+            else
+                current_gist << line
+            end
+        end
+        parsed_lines
     end
 end
 

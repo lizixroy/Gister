@@ -9,6 +9,14 @@ class RawGistsParserTests < Test::Unit::TestCase
        assert_not_nil(raw_gists)
        asset_equal(expected_raw_gists_count, raw_gists.length)
     end
+    
+    def test_parse_lines_with_1delimiter_but_no_content
+        lines = ["$$$"]
+        raw_gists = RawGistsParser.parse_lines(lines)
+        expected_raw_gists_count = 0
+        assert_not_nil(raw_gists)
+        asset_equal(expected_raw_gists_count, raw_gists.length)        
+    end
 end
 
 class RawGistTests < Test::Unit::TestCase

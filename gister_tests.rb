@@ -74,6 +74,23 @@ class RawGistsParserTests < Test::Unit::TestCase
         assert_equal("line1", parsed_line_0)        
         assert_equal("line2", parsed_line_1)
     end
+
+    def test_parse_lines_with_multiple_lines
+        lines = ["line1", "line2", "line3", "$$$"]
+        
+        expected_description = "example description"
+        expected_gist_name_suffix = "gist_name.swift"
+        
+        parsed_lines = RawGistsParser.parse_lines(lines)
+        
+        expected_parsed_lines_count = 1
+        assert_not_nil(parsed_lines)
+        assert_equal(expected_parsed_lines_count, parsed_lines.length)            
+        
+        expected_count = 3
+        parsed_line = parsed_lines[0]
+        assert_equal(expected_count, parsed_line.count)
+    end
     
 end
 

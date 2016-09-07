@@ -1,10 +1,8 @@
 require 'octokit'
 
-
-
 class RawGistsParser
-    DELIMITER = "$$$"    
-    def self.parse(filename)
+    DELIMITER = "$$$"
+    def self.parse(filename)        
         begin
            content = File.readlines filename
            lines = Array.new
@@ -20,13 +18,15 @@ class RawGistsParser
     end
     
     def self.parse_lines(lines) 
-        
+                
     end
 end
 
 puts RawGistsParser.parse("file.txt")
 
-class RawGist        
+class RawGist           
+   attr_reader :description, :is_public, :gist_name, :content
+    
    def initialize(options)
        @description = options[:description]
        @is_public = options[:is_public]

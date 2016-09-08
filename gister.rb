@@ -9,7 +9,7 @@ class RawGistsParser
            content.each do |line| 
                lines << line
         end
-        lines
+        parse_lines(lines)
         rescue
            puts "file does not exist" 
            puts "exiting ..."
@@ -21,7 +21,7 @@ class RawGistsParser
         parsed_lines = Array.new
         current_gist = Array.new        
         lines.each do |line|
-            if line == DELIMITER
+            if line.gsub("\n", "") == DELIMITER
                unless current_gist.count == 0
                   parsed_lines << current_gist
                   current_gist = Array.new 
@@ -52,21 +52,22 @@ end
 class RawGistPayloadFactory
    def self.create_raw_gist(options) 
       raw_gist_lines = options[:raw_gist_lines]
-      description = options[:descriptoin] 
+      description = options[:description] 
       gist_name_suffix = options[:gist_name_suffix]
       is_public = options[:is_public]      
       raw_gists = Array.new
       index = 0
-      raw_gist_lines.each do |lines|
+      raw_gist_lines.each do |lines|          
           line = concat_lines(lines)
           raw_gists << RawGist.new({description: description, is_public: is_public, gist_name: "#{index}" + "." + gist_name_suffix, content: line}).format()
+          index += 1
       end
       raw_gists
    end
    
    private    
    def self.concat_lines(lines)
-       if lines.count == 0 
+       if lines.length == 0 
           return "" 
        end
        content = ""
@@ -128,7 +129,8 @@ class CommandLineInterface
            end
            break
        end
-       return {github_username: @github_username, github_password: @github_password, file_name: @file_name, description: @description, gist_name_suffix: @gist_name_suffix, is_public: @is_public}
+       is_public = (@is_public == "1")
+       return {github_username: @github_username, github_password: @github_password, file_name: @file_name, description: @description, gist_name_suffix: @gist_name_suffix, is_public: is_public}
     end
     
     private         
@@ -149,33 +151,29 @@ class CommandLineInterface
 end
 
 # this class connects everything together
-class Gister
+class Gister    
+    def self.create_gists()
+        command_line_interface = CommandLineInterface.new
+        input = command_line_interface.read_input()
+        parsed_lines = RawGistsParser.parse(input[:file_name])
+        raw_gists = RawGistPayloadFactory.create_raw_gist({raw_gist_lines: parsed_lines, description: input[:description], gist_name_suffix: input[:gist_name_suffix], is_public: input[:is_public]})            
+        client = nil
+        puts "authenticating ..."    
+        begin
+            client = Octokit::Client.new \
+              :login    => input[:github_username],
+              :password => input[:github_password]
+            user = client.user
+            user.login                    
+        rescue 
+            puts "Authentication failure: bad credentials"
+        end                    
+        puts "creating gists now ... "        
+        raw_gists.each do |raw_gist|            
+           resource = client.create_gist(raw_gist)
+           puts "gist created: #{resource.html_url}"
+        end
+    end
 end
 
-# client = Octokit::Client.new \
-#   :login    => 'li1471@purdue.edu',
-#   :password => 'ZENGxiaolin1964'
-#
-# user = client.user
-# user.login
-#
-# file_content = "
-# class Example {
-#     let name: String
-#     int(name: String) {
-#         self.name = name
-#     }
-# }
-# "
-
-# resource = (client.create_gist({public: true, files: {"example_from_ruby_2.swift": { "content": file_content }}}))
-#
-# puts resource.class
-#
-# for key, value in resource
-#    puts "#{key}: #{value}"
-# end
-
-cli = CommandLineInterface.new
-input = cli.read_input()
-puts input
+Gister.create_gists()

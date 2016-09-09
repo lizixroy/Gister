@@ -1,4 +1,4 @@
-###Gister
+#Gister
 
 If you enjoy writing technical blogs like I do, you might have also experienced the pain of going back and forth between your blog and Github for 15 times to create gists in order to get some code snippets into your article. 
 
@@ -6,7 +6,7 @@ Well, fear no more. Gister is a tiny script that automates this process.
 
 All you need to do is to put all the code you need gists for in one input file and Gister will create all the gists for you in seconds.
 
-###Usage
+#Usage
 
 Gister relies on octokit to interface with Github. So install that first: 
 gem install octokit
@@ -46,6 +46,6 @@ gist created: https://gist.github.com/bf93064980a787e17a00a05ee353b954
 
 Then you can paste these gists URLs directly into your blog.  
 
-###Licience
+#Licience
 
-Just kidding, take and use it however you like.
+MIT

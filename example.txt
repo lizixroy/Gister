@@ -1,0 +1,12 @@
+class ClassZero {
+	let variable = "this is 0th class"
+}
+$$$
+class ClassOne {
+	let variable = "this is 1st class"
+}
+$$$
+class ClassTwo {
+	let variable = "this is 2ed class"
+}
+$$$

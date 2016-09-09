@@ -35,8 +35,6 @@ class RawGistsParser
 end
 
 class RawGist           
-   attr_reader :description, :is_public, :gist_name, :content
-    
    def initialize(options)
        @description = options[:description]
        @is_public = options[:is_public]
@@ -78,7 +76,6 @@ class RawGistPayloadFactory
    end
 end
 
-# this class interacts with user through a command line interface
 class CommandLineInterface
     GITHUB_ACCOUNT = "Please enter your Github username or email. (The Github account you want to create gists on)"
     GITHUB_PASSWORD = "Please enter you Github password. (Password is needed becasue creating gist requires authentication)"
@@ -150,7 +147,6 @@ class CommandLineInterface
     end
 end
 
-# this class connects everything together
 class Gister    
     def self.create_gists()
         command_line_interface = CommandLineInterface.new
@@ -176,4 +172,4 @@ class Gister
     end
 end
 
-Gister.create_gists()
+Gister.create_gists() if __FILE__ == $0

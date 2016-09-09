@@ -105,7 +105,3 @@ class RawGistTests < Test::Unit::TestCase
         assert_equal(expected_formatted_raw_gist, raw_gist.format)
     end
 end
-
-class RawGistPayloadFactoryTest < Test::Unit::TestCase 
-    
-end

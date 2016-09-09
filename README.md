@@ -14,12 +14,13 @@ gem install octokit
 As the example in example.txt, just put all your code snippets inside an input file and separate them using the delimiter "$$$":
 
 ####Example input format
-code snippet 1
-$$$
-code snippet 2
-$$$
-code snippet 3
-$$$
+
+code snippet 1  
+$$$  
+code snippet 2  
+$$$  
+code snippet 3  
+$$$  
 
 ####Example use case
 

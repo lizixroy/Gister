@@ -8,7 +8,10 @@ All you need to do is to put all the code you need gists for in one input file a
 
 ###Usage
 
-As the example in example.txt, you will need to put all your code snippets inside an input file and separate them using the delimiter "$$$":
+Gister relies on octokit to interface with Github. So install that first: 
+gem install octokit
+
+As the example in example.txt, just put all your code snippets inside an input file and separate them using the delimiter "$$$":
 
 ####Example input format
 code snippet 1

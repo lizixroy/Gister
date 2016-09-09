@@ -1,6 +1,6 @@
 ###Gister
 
-If you enjoy writing technical blogs like I do, you might have also experienced the pain of going back and forth for between your blog and Github for 15 times to create gist in order to display some code snippets into your article. 
+If you enjoy writing technical blogs like I do, you might have also experienced the pain of going back and forth between your blog and Github for 15 times to create gists in order to get some code snippets into your article. 
 
 Well, fear no more. Gister is a tiny script that automates this process.
 

@@ -46,6 +46,6 @@ gist created: https://gist.github.com/bf93064980a787e17a00a05ee353b954
 
 Then you can paste these gists URLs directly into your blog.  
 
-#Licience
+#License
 
 MIT
